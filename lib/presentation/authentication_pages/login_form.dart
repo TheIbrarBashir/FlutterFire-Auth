@@ -117,10 +117,7 @@ class _LoginFormState extends State<LoginForm> {
                   blurRadius: 5,
                   spreadRadius: 2)
             ],
-            gradient: const LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xff635570), Color(0xff1795C2)])),
+            color: ColorSchema.deepSeaBlue),
         child: const Text(
           'Login',
           style: TextStyle(fontSize: 20, color: Colors.white),
