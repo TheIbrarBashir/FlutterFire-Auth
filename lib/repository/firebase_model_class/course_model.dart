@@ -1,4 +1,5 @@
 class Course {
+  int? courseId = 1;
   String? courseTitle;
   String? courseTeacher;
   double? courseFee;
@@ -6,6 +7,7 @@ class Course {
 //<editor-fold desc="Data Methods">
 
   Course({
+    this.courseId,
     this.courseTitle,
     this.courseTeacher,
     this.courseFee,
@@ -16,17 +18,22 @@ class Course {
       identical(this, other) ||
       (other is Course &&
           runtimeType == other.runtimeType &&
+          courseId == other.courseId &&
           courseTitle == other.courseTitle &&
           courseTeacher == other.courseTeacher &&
           courseFee == other.courseFee);
 
   @override
   int get hashCode =>
-      courseTitle.hashCode ^ courseTeacher.hashCode ^ courseFee.hashCode;
+      courseId.hashCode ^
+      courseTitle.hashCode ^
+      courseTeacher.hashCode ^
+      courseFee.hashCode;
 
   @override
   String toString() {
-    return 'AddCourse{'
+    return 'Course{'
+        ' courseId: $courseId,'
         ' courseTitle: $courseTitle,'
         ' courseTeacher: $courseTeacher,'
         ' courseFee: $courseFee,'
@@ -34,11 +41,13 @@ class Course {
   }
 
   Course copyWith({
+    int? courseId,
     String? courseTitle,
     String? courseTeacher,
     double? courseFee,
   }) {
     return Course(
+      courseId: courseId ?? this.courseId,
       courseTitle: courseTitle ?? this.courseTitle,
       courseTeacher: courseTeacher ?? this.courseTeacher,
       courseFee: courseFee ?? this.courseFee,
@@ -47,17 +56,19 @@ class Course {
 
   Map<String, dynamic> toMap() {
     return {
-      'course_title': courseTitle,
-      'course_teacher': courseTeacher,
-      'course_fee': courseFee,
+      'courseId': courseId,
+      'courseTitle': courseTitle,
+      'courseTeacher': courseTeacher,
+      'courseFee': courseFee,
     };
   }
 
   factory Course.fromMap(Map<String, dynamic> map) {
     return Course(
-      courseTitle: map['course_title'] as String,
-      courseTeacher: map['course_teacher'] as String,
-      courseFee: map['course_fee'] as double,
+      courseId: map['courseId'] as int,
+      courseTitle: map['courseTitle'] as String,
+      courseTeacher: map['courseTeacher'] as String,
+      courseFee: map['courseFee'] as double,
     );
   }
 

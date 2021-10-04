@@ -1,4 +1,3 @@
-import 'package:cas_finance_management/presentation/authentication_pages/authentication_page.dart';
 import 'package:cas_finance_management/presentation/authentication_pages/login_form.dart';
 
 import 'package:cas_finance_management/presentation/widgets/widgets.dart';
@@ -64,6 +63,7 @@ class _CoursePageState extends State<CoursePage> {
                       onPressed: () {
                         FireStoreCourse fireStoreCourse = FireStoreCourse();
                         fireStoreCourse.addCourse(
+
                             courseTitle: _courseTitleController.text,
                             courseTeacher: _courseTeacherController.text,
                             courseFee: double.parse(_courseFeeController.text));
@@ -83,11 +83,7 @@ class _CoursePageState extends State<CoursePage> {
         leading: IconButton(
             onPressed: () {
               userAuth.logOut().then((value) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AuthenticationPage(),
-                    ));
+                Navigator.pop(context);
               });
             },
             icon: const Icon(Icons.logout)),
@@ -115,6 +111,7 @@ class CourseList extends StatelessWidget {
           .collection('users')
           .doc(_uid)
           .collection('course')
+          .orderBy('courseId')
           .snapshots(),
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {

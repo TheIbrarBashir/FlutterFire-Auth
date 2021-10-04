@@ -10,8 +10,8 @@ class FireStoreCourse {
   }
 
   final Course course = Course();
-  bool isUserAdded = false;
-  bool isAddingError = false;
+  bool isCourseAdded = false;
+  bool isCourseError = false;
 
   String? get uid => _user.uid;
 
@@ -30,10 +30,10 @@ class FireStoreCourse {
                 courseFee: courseFee)
             .toMap()))
         .then((value) {
-      isUserAdded = true;
+    //  documentReference.update({'courseId': FieldValue.increment(1)});
+      isCourseAdded = true;
     }).catchError((error) {
-      isAddingError = true;
-      print('Error: $isAddingError');
+      isCourseError = true;
     });
   }
 

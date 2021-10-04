@@ -189,6 +189,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: Container(
         height: _responsive!.height! * 0.06,
+        width: _responsive!.width!*0.80,
         margin: const EdgeInsets.symmetric(vertical: 20),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
