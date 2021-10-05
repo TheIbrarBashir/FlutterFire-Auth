@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CoursePage extends StatefulWidget {
+  static const routeName = '/courses';
   const CoursePage({Key? key}) : super(key: key);
 
   @override
@@ -51,7 +52,7 @@ class _CoursePageState extends State<CoursePage> {
                       InputFormField(
                         labelText: 'Course Fee',
                         hintText: '50000.00',
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         controller: _courseFeeController,
                       )
@@ -110,21 +111,35 @@ class CourseList extends StatelessWidget {
           .collection('users')
           .doc(_uid)
           .collection('course')
-          .orderBy('courseId')
+          .orderBy('courseServerStamp', descending: true)
           .snapshots(),
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
+          return ListView.separated(
+            separatorBuilder: (context, index) => const Divider(
+              height: 2,
+              color: Colors.black,
+            ),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               DocumentSnapshot userData = snapshot.data!.docs[index];
+              print('Document id: ${userData.id}');
               Map<String, dynamic> course =
                   userData.data() as Map<String, dynamic>;
 
               Course _cour = Course.fromMap(course);
 
               return ListTile(
+                onLongPress: () async {
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_uid)
+                      .collection('course')
+                      .doc(userData.id)
+                      .update({'courseTeacher': 'Talha Khotta'}).then(
+                          (value) => print('Recorde updated'));
+                },
                 title: Text('${_cour.courseTitle}'),
                 subtitle: Text('${_cour.courseTeacher}'),
                 trailing: Text('${_cour.courseFee}'),

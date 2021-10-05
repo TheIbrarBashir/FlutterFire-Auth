@@ -1,3 +1,4 @@
+import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/authentication_pages/authentication_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: appRoutes,
+
       title: 'Cas Finance Management',
       theme: ThemeData(
           primarySwatch: Colors.blue,

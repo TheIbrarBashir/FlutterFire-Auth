@@ -10,6 +10,7 @@ import '../widgets/widgets.dart';
 import 'login_form.dart';
 
 class AuthenticationPage extends StatefulWidget {
+  static const routeName = '/login-signup';
   const AuthenticationPage({Key? key}) : super(key: key);
 
   @override

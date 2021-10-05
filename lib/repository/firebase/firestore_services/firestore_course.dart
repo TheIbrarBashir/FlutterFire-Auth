@@ -11,7 +11,9 @@ class FireStoreCourse {
 
   final Course course = Course();
   bool isCourseAdded = false;
-  bool isCourseError = false;
+  bool isCourseRemoved = false;
+  bool isAddingError = false;
+  bool isRemovingError = false;
 
   String? get uid => _user.uid;
 
@@ -32,9 +34,25 @@ class FireStoreCourse {
                 courseFee: courseFee)
             .toMap()))
         .then((value) {
+      isAddingError = false;
       isCourseAdded = true;
     }).catchError((error) {
-      isCourseError = true;
+      isCourseAdded = false;
+      isAddingError = true;
+    });
+  }
+
+  Future<void> deleteCourse({required String docId}) async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('course')
+        .doc(docId)
+        .delete()
+        .then((value) {
+      isCourseRemoved = true;
+    }).catchError((error) {
+      isRemovingError = true;
     });
   }
 
