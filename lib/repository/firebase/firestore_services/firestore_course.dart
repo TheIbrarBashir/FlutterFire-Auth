@@ -24,13 +24,14 @@ class FireStoreCourse {
 
     return documentReference
         .collection('course')
-        .add((Course(
+        .doc()
+        .set((Course(
+                courseServerStamp: FieldValue.serverTimestamp(),
                 courseTitle: courseTitle,
                 courseTeacher: courseTeacher,
                 courseFee: courseFee)
             .toMap()))
         .then((value) {
-    //  documentReference.update({'courseId': FieldValue.increment(1)});
       isCourseAdded = true;
     }).catchError((error) {
       isCourseError = true;

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Course {
-  int? courseId = 1;
+  FieldValue? courseServerStamp;
   String? courseTitle;
   String? courseTeacher;
   double? courseFee;
@@ -7,7 +9,7 @@ class Course {
 //<editor-fold desc="Data Methods">
 
   Course({
-    this.courseId,
+    this.courseServerStamp,
     this.courseTitle,
     this.courseTeacher,
     this.courseFee,
@@ -18,14 +20,14 @@ class Course {
       identical(this, other) ||
       (other is Course &&
           runtimeType == other.runtimeType &&
-          courseId == other.courseId &&
+          courseServerStamp == other.courseServerStamp &&
           courseTitle == other.courseTitle &&
           courseTeacher == other.courseTeacher &&
           courseFee == other.courseFee);
 
   @override
   int get hashCode =>
-      courseId.hashCode ^
+      courseServerStamp.hashCode ^
       courseTitle.hashCode ^
       courseTeacher.hashCode ^
       courseFee.hashCode;
@@ -33,30 +35,30 @@ class Course {
   @override
   String toString() {
     return 'Course{'
-        ' courseId: $courseId,'
+        ' courseServerStamp: $courseServerStamp,'
         ' courseTitle: $courseTitle,'
         ' courseTeacher: $courseTeacher,'
         ' courseFee: $courseFee,'
         '}';
   }
 
-  Course copyWith({
-    int? courseId,
+  /*Course copyWith({
+    int? courseServerStamp,
     String? courseTitle,
     String? courseTeacher,
     double? courseFee,
   }) {
     return Course(
-      courseId: courseId ?? this.courseId,
+      courseServerStamp: courseServerStamp ?? this.courseServerStamp,
       courseTitle: courseTitle ?? this.courseTitle,
       courseTeacher: courseTeacher ?? this.courseTeacher,
       courseFee: courseFee ?? this.courseFee,
     );
-  }
+  }*/
 
   Map<String, dynamic> toMap() {
     return {
-      'courseId': courseId,
+      'courseServerStamp': courseServerStamp,
       'courseTitle': courseTitle,
       'courseTeacher': courseTeacher,
       'courseFee': courseFee,
@@ -65,7 +67,6 @@ class Course {
 
   factory Course.fromMap(Map<String, dynamic> map) {
     return Course(
-      courseId: map['courseId'] as int,
       courseTitle: map['courseTitle'] as String,
       courseTeacher: map['courseTeacher'] as String,
       courseFee: map['courseFee'] as double,

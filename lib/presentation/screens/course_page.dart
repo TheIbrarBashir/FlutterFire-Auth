@@ -63,7 +63,6 @@ class _CoursePageState extends State<CoursePage> {
                       onPressed: () {
                         FireStoreCourse fireStoreCourse = FireStoreCourse();
                         fireStoreCourse.addCourse(
-
                             courseTitle: _courseTitleController.text,
                             courseTeacher: _courseTeacherController.text,
                             courseFee: double.parse(_courseFeeController.text));
