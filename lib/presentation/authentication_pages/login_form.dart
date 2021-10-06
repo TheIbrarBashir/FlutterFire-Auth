@@ -84,11 +84,7 @@ class _LoginFormState extends State<LoginForm> {
                   password: _passwordEditingController.text)
               .then((value) {
             if (value!.emailVerified) {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return const CoursePage();
-                },
-              ));
+              Navigator.pushNamed(context, CoursePage.routeName);
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Email no verified')));
@@ -178,18 +174,13 @@ class _LoginFormState extends State<LoginForm> {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('No Internet')));
         } else {
-          await userAuth.userGoogleSignIn().then((value) => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CoursePage(),
-                    ))
-              });
+          await userAuth.userGoogleSignIn().then(
+              (value) => {Navigator.pushNamed(context, CoursePage.routeName)});
         }
       },
       child: Container(
         height: _responsive!.height! * 0.06,
-        width: _responsive!.width!*0.80,
+        width: _responsive!.width! * 0.80,
         margin: const EdgeInsets.symmetric(vertical: 20),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -271,94 +262,3 @@ class _LoginFormState extends State<LoginForm> {
 }
 
 // End Login Form
-
-class LoginPage extends StatefulWidget {
-  final String? title;
-  const LoginPage({Key? key, this.title}) : super(key: key);
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  Responsive? _responsive;
-  Widget _logo() {
-    return SizedBox(
-        height: _responsive!.height! * 0.15,
-        width: _responsive!.width! * 0.30,
-        child: const Image(
-          image: AssetImage('assets/images/casLogo.png'),
-          fit: BoxFit.cover,
-        ));
-  }
-
-  Widget _createAccountLabel() {
-    return InkWell(
-      onTap: () {
-        /*Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const SignUpPage()));*/
-      },
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        alignment: Alignment.bottomCenter,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'Don\'t have an account?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              'Register',
-              style: TextStyle(
-                  color: ColorSchema.deepSeaBlue,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final _size = MediaQuery.of(context).size;
-    _responsive = Responsive(
-        aspectRatio: _size.aspectRatio,
-        width: _size.width,
-        height: _size.height,
-        size: _size);
-
-    return SafeArea(
-      child: Scaffold(
-          body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-                top: -_responsive!.height! * .15,
-                left: _responsive!.width! * .4,
-                child: const BezierContainer()),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: _responsive!.height! * .2),
-                  _logo(),
-                  const LoginForm(),
-                  SizedBox(height: _responsive!.height! * .030),
-                  _createAccountLabel(),
-                ],
-              ),
-            ),
-            //Positioned(top: 40, left: 0, child: backButton()),
-          ],
-        ),
-      )),
-    );
-  }
-}

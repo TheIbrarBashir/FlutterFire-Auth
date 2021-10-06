@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: AuthenticationPage.routeName,
       routes: appRoutes,
 
       title: 'Cas Finance Management',
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: GoogleFonts.poppinsTextTheme()),
-      home: const AuthenticationPage(),
     );
   }
 }

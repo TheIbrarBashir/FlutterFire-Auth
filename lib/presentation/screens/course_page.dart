@@ -1,4 +1,5 @@
 import 'package:cas_finance_management/presentation/authentication_pages/login_form.dart';
+import 'package:cas_finance_management/presentation/screens/course_edit_page.dart';
 
 import 'package:cas_finance_management/presentation/widgets/widgets.dart';
 
@@ -106,6 +107,13 @@ class CourseList extends StatelessWidget {
   Widget build(BuildContext context) {
     String _uid = FirebaseAuth.instance.currentUser!.uid;
 
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(_uid)
+        .collection('course')
+        .get()
+        .then((value) => print('Number of Groups: ${value.docs.length}'));
+
     return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
@@ -124,21 +132,21 @@ class CourseList extends StatelessWidget {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               DocumentSnapshot userData = snapshot.data!.docs[index];
-              print('Document id: ${userData.id}');
+
               Map<String, dynamic> course =
                   userData.data() as Map<String, dynamic>;
 
               Course _cour = Course.fromMap(course);
 
               return ListTile(
-                onLongPress: () async {
-                  FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(_uid)
-                      .collection('course')
-                      .doc(userData.id)
-                      .update({'courseTeacher': 'Talha Khotta'}).then(
-                          (value) => print('Recorde updated'));
+                onTap: () {
+                  Navigator.pushNamed(context, CourseMasterDetailPage.routeName,
+                      arguments: ScreenArguments(
+                          courseTitle: _cour.courseTitle,
+                          courseTeacher: _cour.courseTeacher,
+                          courseFee: _cour.courseFee,
+                          documentId: userData.id,
+                          userId: _uid));
                 },
                 title: Text('${_cour.courseTitle}'),
                 subtitle: Text('${_cour.courseTeacher}'),
@@ -158,4 +166,19 @@ class CourseList extends StatelessWidget {
       },
     );
   }
+}
+
+class ScreenArguments {
+  final String? documentId;
+  final String? courseTitle;
+  final String? userId;
+  final String? courseTeacher;
+  final double? courseFee;
+
+  ScreenArguments(
+      {this.courseTeacher,
+      this.courseFee,
+      this.documentId,
+      this.courseTitle,
+      this.userId});
 }
