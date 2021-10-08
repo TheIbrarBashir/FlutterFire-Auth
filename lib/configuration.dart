@@ -4,7 +4,7 @@ import 'package:cas_finance_management/presentation/screens/course_page.dart';
 import 'package:flutter/cupertino.dart';
 
 class ColorSchema {
-  static const Color deepBlue = Color(0xff635570);
+  static const Color grey = Color(0xff635570);
   static const Color deepSeaBlue = Color(0xff1795C2);
   static const Color inputFieldFillColor = Color(0xfff3f3f4);
   static const List<Color> gradientColor = <Color>[

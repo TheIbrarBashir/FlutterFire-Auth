@@ -1,5 +1,6 @@
 import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/authentication_pages/authentication_page.dart';
+import 'package:cas_finance_management/presentation/screens/course_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: AuthenticationPage.routeName,
       routes: appRoutes,
-
       title: 'Cas Finance Management',
       theme: ThemeData(
           primarySwatch: Colors.blue,

@@ -83,7 +83,7 @@ Widget formButton(
   return ElevatedButton(onPressed: onPress, child: child);
 }
 
-/// Container for Login Page
+/// Auth page Container
 class BezierContainer extends StatelessWidget {
   const BezierContainer({Key? key}) : super(key: key);
 
@@ -92,7 +92,7 @@ class BezierContainer extends StatelessWidget {
     return Transform.rotate(
       angle: -pi / 3.5,
       child: ClipPath(
-        clipper: ClipPainter(),
+        clipper: _ClipPainter(),
         child: Container(
           height: MediaQuery.of(context).size.height * .5,
           width: MediaQuery.of(context).size.width,
@@ -107,7 +107,7 @@ class BezierContainer extends StatelessWidget {
   }
 }
 
-class ClipPainter extends CustomClipper<Path> {
+class _ClipPainter extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var height = size.height;
@@ -195,4 +195,30 @@ Widget tabButton({
       style: GoogleFonts.poppins(fontSize: 15, color: Colors.white),
     ),
   );
+}
+
+Future<void> showDeleteWarningDialog(
+    {required BuildContext context, VoidCallback? onTap}) async {
+  showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: const Text('Add Course'),
+            scrollable: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            content: Container(
+              alignment: Alignment.center,
+              child: const Text('Are you sure'),
+            ),
+            actions: <Widget>[
+              IconButton(
+                  onPressed: onTap,
+                  icon: const Icon(Icons.delete_forever_outlined)),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.cancel))
+            ],
+          ));
 }

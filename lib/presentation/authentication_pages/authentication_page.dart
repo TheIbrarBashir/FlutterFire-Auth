@@ -35,7 +35,7 @@ class _AuthenticationPageState extends State<AuthenticationPage>
   Widget _tabBar() {
     return Container(
       decoration: BoxDecoration(
-          color: ColorSchema.deepBlue, borderRadius: BorderRadius.circular(50)),
+          color: ColorSchema.grey, borderRadius: BorderRadius.circular(50)),
       height: _responsive!.height! * 0.07,
       width: _responsive!.width! * 0.90,
       child: TabBar(

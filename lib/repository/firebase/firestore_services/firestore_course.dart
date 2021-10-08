@@ -56,7 +56,5 @@ class FireStoreCourse {
     });
   }
 
-  /*Stream<Stream<QuerySnapshot<Map<String, dynamic>>>> getCourses() async* {
-    yield _userCollection.doc(uid).collection('courses').snapshots();
-  }*/
+
 }

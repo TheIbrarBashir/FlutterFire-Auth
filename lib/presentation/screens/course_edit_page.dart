@@ -35,3 +35,5 @@ class _CourseMasterDetailPageState extends State<CourseMasterDetailPage> {
     );
   }
 }
+
+
