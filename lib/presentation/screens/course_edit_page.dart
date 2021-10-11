@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class CourseMasterDetailPage extends StatefulWidget {
   static const routeName = '/courseMaster';
+
   const CourseMasterDetailPage({Key? key}) : super(key: key);
 
   @override
@@ -13,21 +14,22 @@ class CourseMasterDetailPage extends StatefulWidget {
 
 class _CourseMasterDetailPageState extends State<CourseMasterDetailPage> {
   String update = 'Teacher Changed';
+
   @override
   Widget build(BuildContext context) {
-    final arguments =
+    final _arguments =
         ModalRoute.of(context)!.settings.arguments as ScreenArguments;
 
     return Scaffold(
       body: Center(
           child: ListTile(
-        title: Text('${arguments.courseTitle}'),
+        title: Text('${_arguments.courseTitle}'),
         onLongPress: () async {
           FirebaseFirestore.instance
               .collection('users')
-              .doc(arguments.userId)
+              .doc(_arguments.userId)
               .collection('course')
-              .doc(arguments.documentId)
+              .doc(_arguments.documentId)
               .update({'courseTeacher': update}).then(
                   (value) => print('Recorde updated'));
         },
@@ -35,5 +37,3 @@ class _CourseMasterDetailPageState extends State<CourseMasterDetailPage> {
     );
   }
 }
-
-

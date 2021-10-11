@@ -40,7 +40,7 @@ class _AuthenticationPageState extends State<AuthenticationPage>
       width: _responsive!.width! * 0.90,
       child: TabBar(
         indicator: const BoxDecoration(
-            color: ColorSchema.deepSeaBlue,
+            color: ColorSchema.blue,
             borderRadius: BorderRadius.all(Radius.circular(50))),
         controller: _tabController,
         tabs: <Widget>[

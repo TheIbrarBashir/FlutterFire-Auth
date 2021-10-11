@@ -1,11 +1,13 @@
+
 import 'package:cas_finance_management/presentation/authentication_pages/authentication_page.dart';
 import 'package:cas_finance_management/presentation/screens/course_edit_page.dart';
 import 'package:cas_finance_management/presentation/screens/course_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ColorSchema {
   static const Color grey = Color(0xff635570);
-  static const Color deepSeaBlue = Color(0xff1795C2);
+  static const Color blue = Color(0xff1795C2);
   static const Color inputFieldFillColor = Color(0xfff3f3f4);
   static const List<Color> gradientColor = <Color>[
     Color(0xff635570),
@@ -18,6 +20,7 @@ class Responsive {
   final double? height;
   final double? width;
   final double? aspectRatio;
+
   Responsive({
     this.size,
     this.height,
@@ -31,3 +34,17 @@ Map<String, WidgetBuilder> appRoutes = <String, WidgetBuilder>{
   CoursePage.routeName: (context) => const CoursePage(),
   CourseMasterDetailPage.routeName: (context) => const CourseMasterDetailPage()
 };
+
+class Test extends StatefulWidget {
+  const Test({Key? key}) : super(key: key);
+
+  @override
+  _TestState createState() => _TestState();
+}
+
+class _TestState extends State<Test> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Container(color: Colors.amber,),);
+  }
+}

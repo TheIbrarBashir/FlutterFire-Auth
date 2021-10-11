@@ -42,7 +42,7 @@ class _SignupFormState extends State<SignupForm> {
             ],
             icon: const Icon(
               Icons.account_circle_outlined,
-              color: ColorSchema.deepSeaBlue,
+              color: ColorSchema.blue,
             ),
             textInputAction: TextInputAction.next,
           ),
@@ -55,7 +55,7 @@ class _SignupFormState extends State<SignupForm> {
             inputFormatters: InputFormat.emailInputFormat,
             icon: const Icon(
               Icons.mail_outline,
-              color: ColorSchema.deepSeaBlue,
+              color: ColorSchema.blue,
             ),
             textInputAction: TextInputAction.next,
           ),
@@ -69,7 +69,7 @@ class _SignupFormState extends State<SignupForm> {
             inputFormatters: InputFormat.passwordInputFormat,
             icon: const Icon(
               Icons.lock_outline_rounded,
-              color: ColorSchema.deepSeaBlue,
+              color: ColorSchema.blue,
             ),
             suffixWidget: IconButton(
               onPressed: () {

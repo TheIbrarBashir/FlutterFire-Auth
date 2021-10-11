@@ -56,7 +56,7 @@ class InputFormField extends StatelessWidget {
           labelText: labelText,
           labelStyle: const TextStyle(color: Colors.black),
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorSchema.deepSeaBlue),
+            borderSide: BorderSide(color: ColorSchema.blue),
           ),
           errorBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.red),

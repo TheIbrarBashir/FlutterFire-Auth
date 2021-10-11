@@ -1,12 +1,11 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart ';
+import 'package:flutter/material.dart';
 
 class ConnectivityChangeNotifier extends ChangeNotifier {
   ConnectivityChangeNotifier() {
     Connectivity().onConnectivityChanged.listen((event) {
       _checkConnection(event);
     });
-
   }
 
   bool _isMobileData = false;
@@ -14,25 +13,21 @@ class ConnectivityChangeNotifier extends ChangeNotifier {
   bool _isNoInternet = false;
 
   bool get isMobileData => _isMobileData;
+
   bool get isWifi => _isWifi;
 
   bool get isNoInternet => _isNoInternet;
 
   void _checkConnection(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
-      print('............No Internet ');
       _isNoInternet = true;
       _isMobileData = false;
       _isWifi = false;
     } else if (result == ConnectivityResult.mobile) {
-      print('............Mobile Data ');
-
       _isNoInternet = false;
       _isMobileData = true;
       _isWifi = false;
     } else if (result == ConnectivityResult.wifi) {
-      print('............Wifi ');
-
       _isNoInternet = false;
       _isMobileData = false;
       _isWifi = true;

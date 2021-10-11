@@ -25,6 +25,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _emailEditingController = TextEditingController();
   final TextEditingController _passwordEditingController =
       TextEditingController();
+
   Widget _emailPasswordLoginWidget() {
     return Form(
       key: _loginFormKey,
@@ -39,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
             inputFormatters: InputFormat.emailInputFormat,
             icon: const Icon(
               Icons.mail_outline,
-              color: ColorSchema.deepSeaBlue,
+              color: ColorSchema.blue,
             ),
             textInputAction: TextInputAction.next,
           ),
@@ -53,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
             obscureText: _isObscure,
             icon: const Icon(
               Icons.lock_outline_rounded,
-              color: ColorSchema.deepSeaBlue,
+              color: ColorSchema.blue,
             ),
             suffixWidget: IconButton(
               onPressed: () {
@@ -113,7 +114,7 @@ class _LoginFormState extends State<LoginForm> {
                   blurRadius: 5,
                   spreadRadius: 2)
             ],
-            color: ColorSchema.deepSeaBlue),
+            color: ColorSchema.blue),
         child: const Text(
           'Login',
           style: TextStyle(fontSize: 20, color: Colors.white),
@@ -262,3 +263,4 @@ class _LoginFormState extends State<LoginForm> {
 }
 
 // End Login Form
+

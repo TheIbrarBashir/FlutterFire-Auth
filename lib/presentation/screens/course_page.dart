@@ -10,12 +10,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../configuration.dart';
 
 class CoursePage extends StatefulWidget {
   static const routeName = '/courses';
+
   const CoursePage({Key? key}) : super(key: key);
 
   @override
@@ -118,6 +120,7 @@ class _CoursePageState extends State<CoursePage> {
 
 class CourseList extends StatelessWidget {
   final Responsive? responsive;
+
   const CourseList({Key? key, this.responsive}) : super(key: key);
 
   Widget _courseView({
@@ -149,7 +152,7 @@ class CourseList extends StatelessWidget {
                     onPressed: onDeleteTap,
                     icon: const Icon(
                       Icons.delete_forever_outlined,
-                      color: ColorSchema.deepSeaBlue,
+                      color: ColorSchema.blue,
                     ))),
             Positioned(
                 top: _containerHeight * 0,
@@ -158,7 +161,7 @@ class CourseList extends StatelessWidget {
                   onPressed: onEditTap,
                   icon: const Icon(
                     Icons.edit_outlined,
-                    color: ColorSchema.deepSeaBlue,
+                    color: ColorSchema.blue,
                   ),
                 )),
             Positioned(
@@ -171,7 +174,7 @@ class CourseList extends StatelessWidget {
                       shape: BoxShape.circle,
                       border: Border.all(width: 1, color: ColorSchema.grey),
                       image: const DecorationImage(
-                          image: AssetImage('assets/images/google.jpg'),
+                          image: AssetImage('assets/images/courseIcon.jpg'),
                           fit: BoxFit.cover)),
                 )),
             Positioned(
@@ -219,7 +222,7 @@ class CourseList extends StatelessWidget {
                         fontSize: 12),
                   ),
                   decoration: const BoxDecoration(
-                      color: ColorSchema.deepSeaBlue,
+                      color: ColorSchema.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                 ),
               ),
@@ -266,7 +269,8 @@ class CourseList extends StatelessWidget {
                       arguments: ScreenArguments(
                         courseTitle: _cour.courseTitle,
                       ));
-                }, // onViewGroupTap
+                },
+                // onViewGroupTap
                 onEditTap: () async {
                   await FirebaseFirestore.instance
                       .collection('users')
@@ -288,7 +292,10 @@ class CourseList extends StatelessWidget {
           );
         } else if (snapshot.hasError) {
           return Center(
-            child: Text('Error: ${snapshot.error}'),
+            child: Text(
+              'Error: ${snapshot.error}',
+              overflow: TextOverflow.ellipsis,
+            ),
           );
         } else {
           return const Center(
