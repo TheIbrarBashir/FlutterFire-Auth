@@ -46,7 +46,7 @@ class _AuthenticationPageState extends State<AuthenticationPage>
         tabs: <Widget>[
           Tab(
               child: Text(
-            'Login',
+            'Login ',
             style: GoogleFonts.poppins(),
           )),
           Tab(
