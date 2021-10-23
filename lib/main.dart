@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: AuthenticationPage.routeName,
       routes: appRoutes,
-      title: 'Cas ',
+      title: 'CAS',
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: GoogleFonts.poppinsTextTheme()),
