@@ -1,6 +1,6 @@
 import 'package:cas_finance_management/configuration.dart';
 
-import 'package:cas_finance_management/presentation/screens/course_page.dart';
+import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:cas_finance_management/presentation/widgets/form_validator.dart';
 import 'package:cas_finance_management/presentation/widgets/internet_connectivity.dart';
 import 'package:cas_finance_management/repository/firebase/firebase_auth/firebase_auth_services.dart';

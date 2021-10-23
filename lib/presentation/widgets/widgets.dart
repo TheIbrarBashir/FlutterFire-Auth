@@ -202,7 +202,7 @@ Future<void> showDeleteWarningDialog(
   showDialog(
       context: context,
       builder: (context) => AlertDialog(
-            title: const Text('Add Course'),
+            title: const Text('Warning'),
             scrollable: true,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -211,14 +211,16 @@ Future<void> showDeleteWarningDialog(
               child: const Text('Are you sure'),
             ),
             actions: <Widget>[
-              IconButton(
-                  onPressed: onTap,
-                  icon: const Icon(Icons.delete_forever_outlined)),
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.cancel))
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: onTap,
+                child: const Text('Delete'),
+              ),
             ],
           ));
 }

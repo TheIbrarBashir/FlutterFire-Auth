@@ -1,7 +1,6 @@
-
 import 'package:cas_finance_management/presentation/authentication_pages/authentication_page.dart';
-import 'package:cas_finance_management/presentation/screens/course_edit_page.dart';
-import 'package:cas_finance_management/presentation/screens/course_page.dart';
+import 'package:cas_finance_management/presentation/screens/course/course_edit_page.dart';
+import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +31,5 @@ class Responsive {
 Map<String, WidgetBuilder> appRoutes = <String, WidgetBuilder>{
   AuthenticationPage.routeName: (context) => const AuthenticationPage(),
   CoursePage.routeName: (context) => const CoursePage(),
-  CourseMasterDetailPage.routeName: (context) => const CourseMasterDetailPage()
+  CourseEditPage.routeName: (context) => const CourseEditPage()
 };
-
