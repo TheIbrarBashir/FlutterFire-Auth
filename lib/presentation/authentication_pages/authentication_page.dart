@@ -1,5 +1,5 @@
 import 'package:cas_finance_management/presentation/authentication_pages/signup_form.dart';
-import 'package:cas_finance_management/providers/model_change_notifier.dart';
+import 'package:cas_finance_management/providers/provider_notifier_models.dart';
 
 import 'package:flutter/cupertino.dart';
 
