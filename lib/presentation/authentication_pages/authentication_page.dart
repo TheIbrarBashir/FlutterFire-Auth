@@ -1,9 +1,11 @@
 import 'package:cas_finance_management/presentation/authentication_pages/signup_form.dart';
+import 'package:cas_finance_management/providers/model_change_notifier.dart';
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../configuration.dart';
 import '../widgets/widgets.dart';
@@ -84,31 +86,34 @@ class _AuthenticationPageState extends State<AuthenticationPage>
         height: _size.height,
         size: _size);
 
-    return SafeArea(
-      child: Scaffold(
-          body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-                top: -_responsive!.height! * .2,
-                left: _responsive!.width! * .4,
-                child: const BezierContainer()),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: _responsive!.height! * 0.1),
-                  _logo(),
-                  _tabBar(),
-                  _tabBarView()
-                ],
+    return ChangeNotifierProvider(
+      create: (context) => PasswordVisibilityNotifier(),
+      child: SafeArea(
+        child: Scaffold(
+            body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                  top: -_responsive!.height! * .2,
+                  left: _responsive!.width! * .4,
+                  child: const BezierContainer()),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: _responsive!.height! * 0.1),
+                    _logo(),
+                    _tabBar(),
+                    _tabBarView()
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      )),
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

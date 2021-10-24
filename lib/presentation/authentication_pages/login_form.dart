@@ -3,9 +3,11 @@ import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:cas_finance_management/presentation/widgets/form_validator.dart';
 import 'package:cas_finance_management/presentation/widgets/internet_connectivity.dart';
+import 'package:cas_finance_management/providers/model_change_notifier.dart';
 import 'package:cas_finance_management/repository/firebase/firebase_auth/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/widgets.dart';
 
@@ -20,7 +22,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   Responsive? _responsive;
-  bool _isObscure = true;
+
   final _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _emailEditingController = TextEditingController();
   final TextEditingController _passwordEditingController =
@@ -44,31 +46,33 @@ class _LoginFormState extends State<LoginForm> {
             ),
             textInputAction: TextInputAction.next,
           ),
-          InputFormField(
-            controller: _passwordEditingController,
-            inputFormatters: InputFormat.passwordInputFormat,
-            keyboardType: TextInputType.text,
-            validator: (value) => FormValidator.passwordFieldValidator(value),
-            labelText: 'Password',
-            hintText: 'password',
-            obscureText: _isObscure,
-            icon: const Icon(
-              Icons.lock_outline_rounded,
-              color: ColorSchema.blue,
-            ),
-            suffixWidget: IconButton(
-              onPressed: () {
-                setState(() {
-                  _isObscure = !_isObscure;
-                });
-              },
-              icon: Icon(
-                _isObscure
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
+          Consumer<PasswordVisibilityNotifier>(
+            builder: (context, value, child) => InputFormField(
+              controller: _passwordEditingController,
+              inputFormatters: InputFormat.passwordInputFormat,
+              keyboardType: TextInputType.text,
+              validator: (value) => FormValidator.passwordFieldValidator(value),
+              labelText: 'Password',
+              hintText: 'password',
+              obscureText: value.passwordVisibility,
+              icon: const Icon(
+                Icons.lock_outline_rounded,
+                color: ColorSchema.blue,
               ),
+              suffixWidget: IconButton(
+                onPressed: () {
+                  Provider.of<PasswordVisibilityNotifier>(context,
+                          listen: false)
+                      .password();
+                },
+                icon: Icon(
+                  value.passwordVisibility
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+              ),
+              textInputAction: TextInputAction.done,
             ),
-            textInputAction: TextInputAction.done,
           ),
         ],
       ),

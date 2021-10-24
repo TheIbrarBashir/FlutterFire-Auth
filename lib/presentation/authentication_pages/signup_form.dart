@@ -1,9 +1,11 @@
 import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/widgets/form_validator.dart';
 import 'package:cas_finance_management/presentation/widgets/internet_connectivity.dart';
+import 'package:cas_finance_management/providers/model_change_notifier.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/widgets.dart';
 import 'login_form.dart';
@@ -59,31 +61,33 @@ class _SignupFormState extends State<SignupForm> {
             ),
             textInputAction: TextInputAction.next,
           ),
-          InputFormField(
-            controller: _passwordEditingController,
-            validator: (value) => FormValidator.passwordFieldValidator(value),
-            labelText: 'Password',
-            hintText: 'password',
-            keyboardType: TextInputType.text,
-            obscureText: _isObscure,
-            inputFormatters: InputFormat.passwordInputFormat,
-            icon: const Icon(
-              Icons.lock_outline_rounded,
-              color: ColorSchema.blue,
-            ),
-            suffixWidget: IconButton(
-              onPressed: () {
-                setState(() {
-                  _isObscure = !_isObscure;
-                });
-              },
-              icon: Icon(
-                _isObscure
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
+          Consumer<PasswordVisibilityNotifier>(
+            builder: (context, value, child) => InputFormField(
+              controller: _passwordEditingController,
+              validator: (value) => FormValidator.passwordFieldValidator(value),
+              labelText: 'Password',
+              hintText: 'password',
+              keyboardType: TextInputType.text,
+              obscureText: value.passwordVisibility,
+              inputFormatters: InputFormat.passwordInputFormat,
+              icon: const Icon(
+                Icons.lock_outline_rounded,
+                color: ColorSchema.blue,
               ),
+              suffixWidget: IconButton(
+                onPressed: () {
+                  Provider.of<PasswordVisibilityNotifier>(context,
+                          listen: false)
+                      .password();
+                },
+                icon: Icon(
+                  value.passwordVisibility
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                ),
+              ),
+              textInputAction: TextInputAction.done,
             ),
-            textInputAction: TextInputAction.done,
           ),
         ],
       ),
@@ -171,4 +175,3 @@ class _SignupFormState extends State<SignupForm> {
     super.dispose();
   }
 }
-

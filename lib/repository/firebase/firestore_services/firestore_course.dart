@@ -56,5 +56,16 @@ class FireStoreCourse {
     });
   }
 
-
+  Future<void> updateCourse(
+      {required String? userId,
+      required String? docId,
+      required Map<String, Object?> data}) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('course')
+        .doc(docId)
+        .update(data)
+        .then((value) => print('Recorde updated'));
+  }
 }

@@ -274,13 +274,6 @@ class CourseList extends StatelessWidget {
                           courseFee: _cour.courseFee,
                           documentId: userData.id,
                           userId: _uid));
-                  // await FirebaseFirestore.instance
-                  //     .collection('users')
-                  //     .doc(_uid)
-                  //     .collection('course')
-                  //     .doc(userData.id)
-                  //     .update({'courseTeacher': 'Ibrar'}).then(
-                  //         (value) => print('Recorde updated'));
                 },
                 onDeleteTap: () => showDeleteWarningDialog(
                   context: context,

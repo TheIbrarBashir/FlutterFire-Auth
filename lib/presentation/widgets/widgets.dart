@@ -20,12 +20,13 @@ class InputFormField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
-  final bool autoFocus = false;
+  final bool autoFocus;
   const InputFormField(
       {Key? key,
       this.labelText,
       this.hintText,
       this.icon,
+      this.autoFocus = false,
       this.obscureText = false,
       this.validator,
       this.controller,

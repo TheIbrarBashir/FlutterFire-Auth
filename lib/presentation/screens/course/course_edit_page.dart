@@ -3,6 +3,7 @@
 import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:cas_finance_management/presentation/widgets/widgets.dart';
+import 'package:cas_finance_management/repository/firebase/firestore_services/firestore_course.dart';
 
 import 'package:flutter/material.dart';
 
@@ -16,31 +17,34 @@ class CourseEditPage extends StatefulWidget {
 }
 
 class _CourseEditPageState extends State<CourseEditPage> {
-  final TextEditingController _courseTitleEditingController =
+  TextEditingController _courseTitleEditingController = TextEditingController();
+  TextEditingController _courseTeacherEditingController =
       TextEditingController();
-  final TextEditingController _courseTeacherEditingController =
-      TextEditingController();
-  final TextEditingController _courseFeeEditingController =
-      TextEditingController();
+  TextEditingController _courseFeeEditingController = TextEditingController();
 
-  String? _courseTitle = 'Course Title';
-  String? _courseTeacher = 'Course Teacher';
-  String? _courseFee = '0.00';
-  Widget _courseField(
-      {Widget? leading,
-      String? title,
-      required String? data,
-      required VoidCallback onPressed,
-      required Icon icon}) {
+  String? _courseTitle;
+  String? _courseTeacher;
+  double? _courseFee;
+  Widget _courseField({
+    Widget? leading,
+    String? title,
+    required String? data,
+    required Widget trailing,
+  }) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: ListTile(
         title: Text('$title'),
         leading: leading,
         subtitle: Text('$data'),
-        trailing: IconButton(onPressed: onPressed, icon: icon),
+        trailing: trailing,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -49,7 +53,7 @@ class _CourseEditPageState extends State<CourseEditPage> {
         ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     _courseTitle = _arguments.courseTitle;
     _courseTeacher = _arguments.courseTeacher;
-    _courseFee = _arguments.courseFee.toString();
+    _courseFee = _arguments.courseFee;
 
     return Scaffold(
       body: Center(
@@ -60,59 +64,100 @@ class _CourseEditPageState extends State<CourseEditPage> {
               title: 'Course Title',
               leading: const Icon(Icons.book_online, color: ColorSchema.grey),
               data: _courseTitle,
-              onPressed: () {
-                showCourseEditDialog(
-                    context: context,
-                    child: InputFormField(
-                      labelText: 'Course Title',
-                      controller: _courseTitleEditingController,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                    ));
-              },
-              icon: const Icon(
-                Icons.edit,
-                color: ColorSchema.blue,
-              )),
+              trailing: IconButton(
+                onPressed: () {
+                  _courseTitleEditingController =
+                      TextEditingController(text: _courseTitle);
+                  _showCourseEditDialog(
+                      context: context,
+                      onSave: () async {
+                        _courseTitle = _courseTitleEditingController.text;
+                        await FireStoreCourse().updateCourse(
+                            userId: _arguments.userId,
+                            docId: _arguments.documentId,
+                            data: {'courseTitle': _courseTitle});
+                        Navigator.pop(context);
+                      },
+                      child: InputFormField(
+                        labelText: 'Course Title',
+                        autoFocus: true,
+                        controller: _courseTitleEditingController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                      ));
+                },
+                icon: const Icon(
+                  Icons.edit,
+                  color: ColorSchema.blue,
+                ),
+              )), // End Course Title
           _courseField(
-              title: 'Course Instructor',
-              leading: const Icon(Icons.person_outline_rounded,
-                  color: ColorSchema.grey),
-              data: _courseTeacher,
-              onPressed: () {
-                showCourseEditDialog(
-                    context: context,
-                    child: InputFormField(
-                      labelText: 'Course Instructor',
-                      controller: _courseTeacherEditingController,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                    ));
-              },
-              icon: const Icon(Icons.edit, color: ColorSchema.blue)),
+            title: 'Course Instructor',
+            leading: const Icon(Icons.person_outline_rounded,
+                color: ColorSchema.grey),
+            data: _courseTeacher,
+            trailing: IconButton(
+                onPressed: () {
+                  _courseTeacherEditingController =
+                      TextEditingController(text: _courseTeacher);
+                  _showCourseEditDialog(
+                      context: context,
+                      onSave: () async {
+                        _courseTeacher = _courseTeacherEditingController.text;
+                        await FireStoreCourse().updateCourse(
+                            userId: _arguments.userId,
+                            docId: _arguments.documentId,
+                            data: {'courseTeacher': _courseTeacher});
+                        Navigator.pop(context);
+                      },
+                      child: InputFormField(
+                        autoFocus: true,
+                        labelText: 'Course Instructor',
+                        controller: _courseTeacherEditingController,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                      ));
+                },
+                icon: const Icon(Icons.edit, color: ColorSchema.blue)),
+          ), // end Course Teacher
           _courseField(
-              title: 'Course Fee',
-              leading: const Icon(Icons.assignment_turned_in_outlined,
-                  color: ColorSchema.grey),
-              data: _courseFee,
-              onPressed: () {
-                showCourseEditDialog(
-                    context: context,
-                    child: InputFormField(
-                      labelText: 'Course Fee',
-                      controller: _courseFeeEditingController,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                    ));
-              },
-              icon: const Icon(Icons.edit, color: ColorSchema.blue))
+            title: 'Course Fee',
+            leading: const Icon(Icons.assignment_turned_in_outlined,
+                color: ColorSchema.grey),
+            data: _courseFee.toString(),
+            trailing: IconButton(
+                onPressed: () {
+                  _courseFeeEditingController =
+                      TextEditingController(text: _courseFee.toString());
+                  _showCourseEditDialog(
+                      onSave: () async {
+                        _courseFee =
+                            double.tryParse(_courseFeeEditingController.text);
+                        await FireStoreCourse().updateCourse(
+                            userId: _arguments.userId,
+                            docId: _arguments.documentId,
+                            data: {'courseFee': _courseFee});
+
+                        Navigator.pop(context);
+                      },
+                      context: context,
+                      child: InputFormField(
+                        labelText: 'Course Fee',
+                        autoFocus: true,
+                        controller: _courseFeeEditingController,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                      ));
+                },
+                icon: const Icon(Icons.edit, color: ColorSchema.blue)),
+          ) // end course fee
         ],
       )),
     );
   }
 }
 
-Future<void> showCourseEditDialog(
+Future<void> _showCourseEditDialog(
     {required BuildContext context,
     VoidCallback? onSave,
     Widget? child}) async {
@@ -132,7 +177,7 @@ Future<void> showCourseEditDialog(
                     Navigator.pop(context);
                   },
                   child: const Text('Cancel')),
-              TextButton(onPressed: () {}, child: const Text('Save')),
+              TextButton(onPressed: onSave, child: const Text('Save')),
             ],
           ));
 }
