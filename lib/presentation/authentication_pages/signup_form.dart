@@ -19,7 +19,7 @@ class SignupForm extends StatefulWidget {
 
 class _SignupFormState extends State<SignupForm> {
   Responsive? _responsive;
-  bool _isObscure = true;
+
   final _signupFormKey = GlobalKey<FormState>();
   final TextEditingController _userNameEditingController =
       TextEditingController();
