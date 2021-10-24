@@ -3,9 +3,11 @@
 import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:cas_finance_management/presentation/widgets/widgets.dart';
+import 'package:cas_finance_management/providers/provider_notifier_models.dart';
 import 'package:cas_finance_management/repository/firebase/firestore_services/firestore_course.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CourseEditPage extends StatefulWidget {
   static const routeName = '/courseEdit';
@@ -49,110 +51,136 @@ class _CourseEditPageState extends State<CourseEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('Course Editi Build Called');
     final _arguments =
         ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     _courseTitle = _arguments.courseTitle;
     _courseTeacher = _arguments.courseTeacher;
     _courseFee = _arguments.courseFee;
 
-    return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _courseField(
-              title: 'Course Title',
-              leading: const Icon(Icons.book_online, color: ColorSchema.grey),
-              data: _courseTitle,
-              trailing: IconButton(
-                onPressed: () {
-                  _courseTitleEditingController =
-                      TextEditingController(text: _courseTitle);
-                  _showCourseEditDialog(
-                      context: context,
-                      onSave: () async {
-                        _courseTitle = _courseTitleEditingController.text;
-                        await FireStoreCourse().updateCourse(
-                            userId: _arguments.userId,
-                            docId: _arguments.documentId,
-                            data: {'courseTitle': _courseTitle});
-                        Navigator.pop(context);
+    return ChangeNotifierProvider(
+      create: (context) => CourseTitleChangeNotifier(),
+      child: SafeArea(
+        child: Scaffold(
+          body: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Consumer<CourseTitleChangeNotifier>(
+                builder: (context, value, child) => _courseField(
+                    title: 'Course Title',
+                    leading:
+                        const Icon(Icons.book_online, color: ColorSchema.grey),
+                    data: _courseTitle,
+                    trailing: IconButton(
+                      onPressed: () {
+                        _courseTitleEditingController =
+                            TextEditingController(text: _courseTitle);
+                        _showCourseEditDialog(
+                            context: context,
+                            onSave: () async {
+                              print('Consumer Title Changed');
+                              _courseTitle = _courseTitleEditingController.text;
+                              await FireStoreCourse().updateCourse(
+                                  userId: _arguments.userId,
+                                  docId: _arguments.documentId,
+                                  data: {'courseTitle': _courseTitle});
+                              Provider.of<CourseTitleChangeNotifier>(context,
+                                      listen: false)
+                                  .titleChanged();
+                              Navigator.pop(context);
+                            },
+                            child: InputFormField(
+                              labelText: 'Course Title',
+                              autoFocus: true,
+                              controller: _courseTitleEditingController,
+                              keyboardType: TextInputType.text,
+                              textInputAction: TextInputAction.done,
+                            ));
                       },
-                      child: InputFormField(
-                        labelText: 'Course Title',
-                        autoFocus: true,
-                        controller: _courseTitleEditingController,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                      ));
-                },
-                icon: const Icon(
-                  Icons.edit,
-                  color: ColorSchema.blue,
+                      icon: const Icon(
+                        Icons.edit,
+                        color: ColorSchema.blue,
+                      ),
+                    )),
+              ), // End Course Title
+              Consumer<CourseTitleChangeNotifier>(
+                builder: (context, value, child) => _courseField(
+                  title: 'Course Instructor',
+                  leading: const Icon(Icons.person_outline_rounded,
+                      color: ColorSchema.grey),
+                  data: _courseTeacher,
+                  trailing: IconButton(
+                      onPressed: () {
+                        _courseTeacherEditingController =
+                            TextEditingController(text: _courseTeacher);
+                        _showCourseEditDialog(
+                            context: context,
+                            onSave: () async {
+                              print('Consumer Teacher Changed');
+                              _courseTeacher =
+                                  _courseTeacherEditingController.text;
+                              await FireStoreCourse().updateCourse(
+                                  userId: _arguments.userId,
+                                  docId: _arguments.documentId,
+                                  data: {'courseTeacher': _courseTeacher});
+                              Provider.of<CourseTitleChangeNotifier>(context,
+                                      listen: false)
+                                  .teacherChanged();
+                              Navigator.pop(context);
+                            },
+                            child: InputFormField(
+                              autoFocus: true,
+                              labelText: 'Course Instructor',
+                              controller: _courseTeacherEditingController,
+                              keyboardType: TextInputType.text,
+                              textInputAction: TextInputAction.done,
+                            ));
+                      },
+                      icon: const Icon(Icons.edit, color: ColorSchema.blue)),
                 ),
-              )), // End Course Title
-          _courseField(
-            title: 'Course Instructor',
-            leading: const Icon(Icons.person_outline_rounded,
-                color: ColorSchema.grey),
-            data: _courseTeacher,
-            trailing: IconButton(
-                onPressed: () {
-                  _courseTeacherEditingController =
-                      TextEditingController(text: _courseTeacher);
-                  _showCourseEditDialog(
-                      context: context,
-                      onSave: () async {
-                        _courseTeacher = _courseTeacherEditingController.text;
-                        await FireStoreCourse().updateCourse(
-                            userId: _arguments.userId,
-                            docId: _arguments.documentId,
-                            data: {'courseTeacher': _courseTeacher});
-                        Navigator.pop(context);
-                      },
-                      child: InputFormField(
-                        autoFocus: true,
-                        labelText: 'Course Instructor',
-                        controller: _courseTeacherEditingController,
-                        keyboardType: TextInputType.text,
-                        textInputAction: TextInputAction.done,
-                      ));
-                },
-                icon: const Icon(Icons.edit, color: ColorSchema.blue)),
-          ), // end Course Teacher
-          _courseField(
-            title: 'Course Fee',
-            leading: const Icon(Icons.assignment_turned_in_outlined,
-                color: ColorSchema.grey),
-            data: _courseFee.toString(),
-            trailing: IconButton(
-                onPressed: () {
-                  _courseFeeEditingController =
-                      TextEditingController(text: _courseFee.toString());
-                  _showCourseEditDialog(
-                      onSave: () async {
-                        _courseFee =
-                            double.tryParse(_courseFeeEditingController.text);
-                        await FireStoreCourse().updateCourse(
-                            userId: _arguments.userId,
-                            docId: _arguments.documentId,
-                            data: {'courseFee': _courseFee});
+              ), // end Course Teacher
+              Consumer<CourseTitleChangeNotifier>(
+                builder: (context, value, child) => _courseField(
+                  title: 'Course Fee',
+                  leading: const Icon(Icons.assignment_turned_in_outlined,
+                      color: ColorSchema.grey),
+                  data: _courseFee.toString(),
+                  trailing: IconButton(
+                      onPressed: () {
+                        _courseFeeEditingController =
+                            TextEditingController(text: _courseFee.toString());
+                        _showCourseEditDialog(
+                            onSave: () async {
+                              print('Consumer Fee Changed');
+                              _courseFee = double.tryParse(
+                                  _courseFeeEditingController.text);
+                              await FireStoreCourse().updateCourse(
+                                  userId: _arguments.userId,
+                                  docId: _arguments.documentId,
+                                  data: {'courseFee': _courseFee});
+                              Provider.of<CourseTitleChangeNotifier>(context,
+                                      listen: false)
+                                  .feeChanged();
 
-                        Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
+                            context: context,
+                            child: InputFormField(
+                              labelText: 'Course Fee',
+                              autoFocus: true,
+                              controller: _courseFeeEditingController,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.done,
+                            ));
                       },
-                      context: context,
-                      child: InputFormField(
-                        labelText: 'Course Fee',
-                        autoFocus: true,
-                        controller: _courseFeeEditingController,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                      ));
-                },
-                icon: const Icon(Icons.edit, color: ColorSchema.blue)),
-          ) // end course fee
-        ],
-      )),
+                      icon: const Icon(Icons.edit, color: ColorSchema.blue)),
+                ),
+              ) // end course fee
+            ],
+          )),
+        ),
+      ),
     );
   }
 }
