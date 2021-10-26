@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, unused_field
-
 import 'package:cas_finance_management/configuration.dart';
 import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:cas_finance_management/presentation/widgets/widgets.dart';
@@ -51,7 +49,6 @@ class _CourseEditPageState extends State<CourseEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('Course Editi Build Called');
     final _arguments =
         ModalRoute.of(context)!.settings.arguments as ScreenArguments;
     _courseTitle = _arguments.courseTitle;
@@ -59,14 +56,14 @@ class _CourseEditPageState extends State<CourseEditPage> {
     _courseFee = _arguments.courseFee;
 
     return ChangeNotifierProvider(
-      create: (context) => CourseTitleChangeNotifier(),
+      create: (context) => CourseChangeNotifier(),
       child: SafeArea(
         child: Scaffold(
           body: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Consumer<CourseTitleChangeNotifier>(
+              Consumer<CourseChangeNotifier>(
                 builder: (context, value, child) => _courseField(
                     title: 'Course Title',
                     leading:
@@ -79,13 +76,12 @@ class _CourseEditPageState extends State<CourseEditPage> {
                         _showCourseEditDialog(
                             context: context,
                             onSave: () async {
-                              print('Consumer Title Changed');
                               _courseTitle = _courseTitleEditingController.text;
                               await FireStoreCourse().updateCourse(
                                   userId: _arguments.userId,
                                   docId: _arguments.documentId,
                                   data: {'courseTitle': _courseTitle});
-                              Provider.of<CourseTitleChangeNotifier>(context,
+                              Provider.of<CourseChangeNotifier>(context,
                                       listen: false)
                                   .titleChanged();
                               Navigator.pop(context);
@@ -104,7 +100,7 @@ class _CourseEditPageState extends State<CourseEditPage> {
                       ),
                     )),
               ), // End Course Title
-              Consumer<CourseTitleChangeNotifier>(
+              Consumer<CourseChangeNotifier>(
                 builder: (context, value, child) => _courseField(
                   title: 'Course Instructor',
                   leading: const Icon(Icons.person_outline_rounded,
@@ -117,14 +113,13 @@ class _CourseEditPageState extends State<CourseEditPage> {
                         _showCourseEditDialog(
                             context: context,
                             onSave: () async {
-                              print('Consumer Teacher Changed');
                               _courseTeacher =
                                   _courseTeacherEditingController.text;
                               await FireStoreCourse().updateCourse(
                                   userId: _arguments.userId,
                                   docId: _arguments.documentId,
                                   data: {'courseTeacher': _courseTeacher});
-                              Provider.of<CourseTitleChangeNotifier>(context,
+                              Provider.of<CourseChangeNotifier>(context,
                                       listen: false)
                                   .teacherChanged();
                               Navigator.pop(context);
@@ -140,7 +135,7 @@ class _CourseEditPageState extends State<CourseEditPage> {
                       icon: const Icon(Icons.edit, color: ColorSchema.blue)),
                 ),
               ), // end Course Teacher
-              Consumer<CourseTitleChangeNotifier>(
+              Consumer<CourseChangeNotifier>(
                 builder: (context, value, child) => _courseField(
                   title: 'Course Fee',
                   leading: const Icon(Icons.assignment_turned_in_outlined,
@@ -152,14 +147,13 @@ class _CourseEditPageState extends State<CourseEditPage> {
                             TextEditingController(text: _courseFee.toString());
                         _showCourseEditDialog(
                             onSave: () async {
-                              print('Consumer Fee Changed');
                               _courseFee = double.tryParse(
                                   _courseFeeEditingController.text);
                               await FireStoreCourse().updateCourse(
                                   userId: _arguments.userId,
                                   docId: _arguments.documentId,
                                   data: {'courseFee': _courseFee});
-                              Provider.of<CourseTitleChangeNotifier>(context,
+                              Provider.of<CourseChangeNotifier>(context,
                                       listen: false)
                                   .feeChanged();
 

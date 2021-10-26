@@ -11,7 +11,7 @@ class PasswordVisibilityNotifier extends ChangeNotifier {
   }
 }
 
-class CourseTitleChangeNotifier extends ChangeNotifier {
+class CourseChangeNotifier extends ChangeNotifier {
   void titleChanged() {
     notifyListeners();
   }
@@ -24,5 +24,3 @@ class CourseTitleChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-//class CourseTeacherChangedNotifier extends ChangeNotifier {}
