@@ -43,11 +43,6 @@ class _CourseEditPageState extends State<CourseEditPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final _arguments =
         ModalRoute.of(context)!.settings.arguments as ScreenArguments;
