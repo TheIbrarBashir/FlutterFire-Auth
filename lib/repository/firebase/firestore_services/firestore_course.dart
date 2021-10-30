@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cas_finance_management/repository/firebase/firebase_auth/firebase_auth_services.dart';
 import 'package:cas_finance_management/repository/firebase_model_class/course_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

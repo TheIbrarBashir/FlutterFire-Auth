@@ -42,20 +42,6 @@ class Course {
         '}';
   }
 
-  /*Course copyWith({
-    int? courseServerStamp,
-    String? courseTitle,
-    String? courseTeacher,
-    double? courseFee,
-  }) {
-    return Course(
-      courseServerStamp: courseServerStamp ?? this.courseServerStamp,
-      courseTitle: courseTitle ?? this.courseTitle,
-      courseTeacher: courseTeacher ?? this.courseTeacher,
-      courseFee: courseFee ?? this.courseFee,
-    );
-  }*/
-
   Map<String, dynamic> toMap() {
     return {
       'courseServerStamp': courseServerStamp,

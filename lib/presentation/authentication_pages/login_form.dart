@@ -1,6 +1,7 @@
 import 'package:cas_finance_management/configuration.dart';
 
 import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
+import 'package:cas_finance_management/presentation/screens/enrolled_groups/enrolled_groups_page.dart';
 import 'package:cas_finance_management/presentation/widgets/form_validator.dart';
 import 'package:cas_finance_management/presentation/widgets/internet_connectivity.dart';
 import 'package:cas_finance_management/providers/provider_notifier_models.dart';
@@ -179,8 +180,8 @@ class _LoginFormState extends State<LoginForm> {
           ScaffoldMessenger.of(context)
               .showSnackBar(const SnackBar(content: Text('No Internet')));
         } else {
-          await userAuth.userGoogleSignIn().then(
-              (value) => {Navigator.pushNamed(context, CoursePage.routeName)});
+          await userAuth.userGoogleSignIn().then((value) =>
+              {Navigator.pushNamed(context, EnrolledGroupsPage.routeName)});
         }
       },
       child: Container(

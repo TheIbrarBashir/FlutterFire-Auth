@@ -21,10 +21,14 @@ class InputFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final bool autoFocus;
+  final VoidCallback? onTap;
+  final FocusNode? focusNode;
+  final bool readOnly;
   const InputFormField(
       {Key? key,
       this.labelText,
       this.hintText,
+      this.readOnly = false,
       this.icon,
       this.autoFocus = false,
       this.obscureText = false,
@@ -33,7 +37,9 @@ class InputFormField extends StatelessWidget {
       this.keyboardType = TextInputType.text,
       this.suffixWidget,
       this.textInputAction = TextInputAction.next,
-      this.inputFormatters})
+      this.inputFormatters,
+      this.onTap,
+      this.focusNode})
       : super(key: key);
 
   @override
@@ -42,6 +48,9 @@ class InputFormField extends StatelessWidget {
       padding:
           const EdgeInsets.only(left: 12.0, right: 12.0, top: 8.0, bottom: 8.0),
       child: TextFormField(
+        readOnly: readOnly,
+        focusNode: focusNode,
+        onTap: onTap,
         inputFormatters: inputFormatters,
         autofocus: autoFocus,
         validator: validator,
