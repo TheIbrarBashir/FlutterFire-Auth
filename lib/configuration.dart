@@ -2,6 +2,7 @@ import 'package:cas_finance_management/presentation/authentication_pages/authent
 import 'package:cas_finance_management/presentation/screens/course/course_edit_page.dart';
 import 'package:cas_finance_management/presentation/screens/course/course_page.dart';
 import 'package:cas_finance_management/presentation/screens/enrolled_groups/enrolled_groups_page.dart';
+import 'package:cas_finance_management/presentation/screens/home_page.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,4 +36,5 @@ Map<String, WidgetBuilder> appRoutes = <String, WidgetBuilder>{
   CoursePage.routeName: (context) => const CoursePage(),
   CourseEditPage.routeName: (context) => const CourseEditPage(),
   EnrolledGroupsPage.routeName: (context) => const EnrolledGroupsPage(),
+  HomePage.routeName: (context) => const HomePage(),
 };

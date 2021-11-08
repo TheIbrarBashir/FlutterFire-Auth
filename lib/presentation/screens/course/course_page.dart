@@ -1,3 +1,4 @@
+import 'package:cas_finance_management/presentation/authentication_pages/authentication_page.dart';
 import 'package:cas_finance_management/presentation/authentication_pages/login_form.dart';
 import 'package:cas_finance_management/presentation/screens/course/course_edit_page.dart';
 
@@ -100,7 +101,9 @@ class _CoursePageState extends State<CoursePage> {
         leading: IconButton(
             onPressed: () {
               userAuth.logOut().then((value) {
-                Navigator.pop(context);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    AuthenticationPage.routeName,
+                    (Route<dynamic> route) => false);
               });
             },
             icon: const Icon(Icons.logout)),
