@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "258442155575",
-    "project_id": "cas-finance-management",
-    "storage_bucket": "cas-finance-management.appspot.com"
+    "project_number": "159767106868",
+    "project_id": "cas-management-a7399",
+    "storage_bucket": "cas-management-a7399.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:258442155575:android:4cdf7e8d1bdff6fe2c51b2",
+        "mobilesdk_app_id": "1:159767106868:android:064c9305c604edfb6c0161",
         "android_client_info": {
           "package_name": "pk.org.cas.finance.management.system.cas_finance_management"
         }
       },
       "oauth_client": [
         {
-          "client_id": "258442155575-th092h6qfkqr80l8jog2lt458irs2c06.apps.googleusercontent.com",
+          "client_id": "159767106868-gvte4ivmh5acapsjbb60mll4fbk9p10h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC23mrmdimXKpeUXgjOAHjquHB1wvNhca0"
+          "current_key": "AIzaSyA1JqaU547S0hKxaCMDZhZi8SSc2rvUank"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "258442155575-th092h6qfkqr80l8jog2lt458irs2c06.apps.googleusercontent.com",
+              "client_id": "159767106868-gvte4ivmh5acapsjbb60mll4fbk9p10h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
